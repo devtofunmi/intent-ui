@@ -94,7 +94,7 @@ export const Sidebar = ({
         <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-3 relative z-10 scrollbar-hide">
           {!threads || threads.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center text-center p-12 space-y-6">
-              <div className="w-16 h-16 rounded-[1.5rem] bg-zinc-900 border border-white/5 flex items-center justify-center shadow-2xl relative noise">
+              <div className="w-16 h-16 rounded-[1.5rem] bg-zinc-900 border border-white/5 flex items-center justify-center shadow-2xl relative noise overflow-hidden">
                  <div className="absolute inset-0 bg-brand/10 blur-xl rounded-full animate-pulse" />
                 <History size={24} className="text-zinc-600 relative z-10" />
               </div>
