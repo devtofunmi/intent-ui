@@ -118,7 +118,7 @@ const Nav = ({
                           onClick={(e) => handleScroll(e, href)}
                           target={href?.startsWith('http') ? "_blank" : undefined}
                           rel={href?.startsWith('http') ? "noopener noreferrer" : undefined}
-                          className="text-4xl sm:text-6xl font-black text-white hover:text-brand transition-all uppercase tracking-tighter flex items-center justify-between group py-4 border-b border-white/5 last:border-0"
+                          className="text-2xl sm:text-4xl font-black text-white hover:text-brand transition-all uppercase tracking-tighter flex items-center justify-between group py-4 border-b border-white/5 last:border-0"
                         >
                           {label}
                           <ArrowRight size={38} className="opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all text-brand" />
