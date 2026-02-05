@@ -85,7 +85,7 @@ const Landing = ({ onLaunch }) => {
               { 
                 name: "Jordan Smith", 
                 role: "Frontend Architect", 
-                quote: "The code quality is surprisingly clean. It's not just a demo, it's a tool.",
+                quote: "The interface quality is surprisingly clean. It's not just a demo, it's a tool.",
                 rating: 5,
                 avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Jordan"
               },
