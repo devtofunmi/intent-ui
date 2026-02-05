@@ -73,11 +73,13 @@ Design supports the Generative UI experience without overshadowing functionality
 
 ## Project Structure
 
+```text
 src/
-├─ components/ # Registered UI components
-├─ registry/ # Tambo component definitions & schemas
-├─ pages/ # Workspace and demo flows
-├─ lib/ # Utilities
+├─ components/     # Registered UI components
+├─ registry/       # Tambo component definitions & schemas
+├─ pages/          # Workspace and demo flows
+├─ lib/            # Utilities
+```
 
 ---
 
