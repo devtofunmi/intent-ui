@@ -43,7 +43,7 @@ export const Header: React.FC<HeaderProps> = ({
 
           {/* Canvas Toolbar Integration */}
           {canvasItems.length > 0 && (
-            <div className="flex items-center gap-1.5 md:gap-2 p-1 md:p-1.5 glass-card noise border-white/10 shadow-none animate-in fade-in duration-700 min-w-0">
+            <div className="flex items-center rounded-md gap-1.5 md:gap-2 p-1 md:p-1.5 glass-card noise border-white/10 shadow-none animate-in fade-in duration-700 min-w-0">
               <div className="flex items-center gap-1 border-r border-white/10 pr-1.5 md:pr-2 mr-0.5 md:mr-1">
                 <button 
                   onClick={() => setViewMode('preview')}

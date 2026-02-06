@@ -98,7 +98,7 @@ export const HistorySidebar = ({
               <p className="text-xs text-zinc-600 font-black uppercase tracking-[0.2em]">No Active Sessions</p>
             </div>
           ) : (
-            threads.map((t) => (
+            Array.from(new Map(threads.map(t => [t.id, t])).values()).map((t) => (
               <div key={t.id} className={cn(
                 "group relative flex items-center gap-4 p-4 rounded-2xl transition-all duration-500 border glass-card noise overflow-hidden shadow-none",
                 activeThreadId === t.id 

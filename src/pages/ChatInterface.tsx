@@ -193,6 +193,7 @@ const ChatInterface = React.memo(({ onBackToLanding }: ChatInterfaceProps) => {
           thread={thread}
           canvasItems={canvasItems}
           viewMode={viewMode}
+          isStreaming={isPending}
         />
       </div>
 

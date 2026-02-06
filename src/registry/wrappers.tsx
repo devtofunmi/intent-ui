@@ -27,9 +27,7 @@ import {
   TableRow,
   TableCell,
 } from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import {  ArrowRight } from "lucide-react";
+
 import { cn } from "@/lib/utils";
 
 export const Card = ({ title, description, content, footer, className }: any) => (
@@ -81,64 +79,45 @@ export const Accordion = ({ type = "single", items, className }: any) => (
   </ShadcnAccordion>
 );
 
-export const Hero = ({ badge, title, subtitle, ctaText, secondaryCtaText, onCtaClick }: any) => (
-  <div className="py-24 md:py-32 flex flex-col items-center text-center space-y-8 animate-in fade-in duration-1000">
-    {badge && (
-      <Badge variant="outline" className="rounded-full px-4 py-1 border-brand/30 text-brand bg-brand/5 uppercase text-[10px] font-black tracking-[0.2em]">
-        {badge}
-      </Badge>
-    )}
-    <h1 className="text-5xl md:text-7xl font-black text-white italic tracking-tighter uppercase leading-[0.9] drop-shadow-2xl max-w-4xl">
-      {title?.split(' ').map((word: string, i: number) => (
-        <span key={i} className={i % 3 === 1 ? "text-brand" : ""}>{word} </span>
-      ))}
-    </h1>
-    <p className="text-xl text-zinc-400 font-medium max-w-2xl mx-auto tracking-wide">
-      {subtitle}
-    </p>
-    <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
-      <Button size="lg" onClick={onCtaClick} className="rounded-full px-10 h-14 text-lg font-bold shadow-2xl brand-glow">
-        {ctaText || "Get Started"} <ArrowRight className="ml-2 w-5 h-5" />
-      </Button>
-      {secondaryCtaText && (
-        <Button variant="outline" size="lg" className="rounded-full px-10 h-14 text-lg font-bold border-white/10 hover:bg-white/5">
-          {secondaryCtaText}
-        </Button>
-      )}
-    </div>
-  </div>
-);
 
-export const CodeFrame = ({ html, className }: any) => (
+
+export const CodeFrame = ({ html, className, isLoading }: any) => (
   <div className={cn("w-full h-full flex-1 bg-white shadow-2xl relative", className)}>
-    <iframe
-      srcDoc={`
-        <html>
-          <head>
-            <meta charset="utf-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1">
-            <script src="https://cdn.tailwindcss.com"></script>
-            <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-            <style>
-              body { font-family: 'Inter', sans-serif; margin: 0; padding: 0; background: white; min-height: 100vh; }
-              ::-webkit-scrollbar { width: 10px; }
-              ::-webkit-scrollbar-track { background: #f8f9fa; }
-              ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 5px; border: 2px solid #f8f9fa; }
-              ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-              #preview-root { min-height: 100vh; }
-            </style>
-          </head>
-          <body>
-            <div id="preview-root">
-              ${html}
-            </div>
-          </body>
-        </html>
-      `}
-      className="w-full h-full min-h-[85vh] border-0 block"
-      title="Live Preview"
-      sandbox="allow-scripts"
-    />
+    {!html || isLoading ? (
+      <div className="absolute inset-0 flex flex-col items-center justify-center bg-zinc-50 space-y-4">
+        <div className="w-6 h-6 border-2 border-brand/20 border-t-brand rounded-full animate-spin" />
+        <p className="text-xs text-zinc-500 font-bold uppercase tracking-widest animate-pulse">Generating Interface...</p>
+      </div>
+    ) : (
+      <iframe
+        srcDoc={`
+          <html>
+            <head>
+              <meta charset="utf-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1">
+              <script src="https://cdn.tailwindcss.com"></script>
+              <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+              <style>
+                body { font-family: 'Inter', sans-serif; margin: 0; padding: 0; background: white; min-height: 100vh; }
+                ::-webkit-scrollbar { width: 10px; }
+                ::-webkit-scrollbar-track { background: #f8f9fa; }
+                ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 5px; border: 2px solid #f8f9fa; }
+                ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+                #preview-root { min-height: 100vh; }
+              </style>
+            </head>
+            <body>
+              <div id="preview-root">
+                ${html}
+              </div>
+            </body>
+          </html>
+        `}
+        className="w-full h-full min-h-[85vh] border-0 block"
+        title="Live Preview"
+        sandbox="allow-scripts"
+      />
+    )}
   </div>
 );
 

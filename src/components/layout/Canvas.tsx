@@ -6,7 +6,7 @@ import { generateAppCode, generateComponentCode } from '../../lib/export-utils';
 import { useGitHub } from '../../lib/github/context';
 import { GithubPushModal } from '../modals/GithubPushModal';
 
-export const Canvas = ({ thread, canvasItems, viewMode }) => {
+export const Canvas = ({ thread, canvasItems, viewMode, isStreaming }: { thread: any, canvasItems: any[], viewMode: string, isStreaming: boolean }) => {
   const [isExporting, setIsExporting] = useState(false);
   const [isGithubModalOpen, setGithubModalOpen] = useState(false);
   const { token } = useGitHub();
@@ -160,7 +160,7 @@ export const Canvas = ({ thread, canvasItems, viewMode }) => {
                   ? canvasItems.filter(item => item.name === 'CodeFrame')
                   : canvasItems)
                   .sort((a, b) => {
-                    const order = ['Hero', 'CodeFrame', 'Card', 'DataTable', 'Tabs', 'Accordion', 'Button', 'Input', 'Badge', 'Checkbox', 'Switch', 'Separator'];
+                    const order = ['CodeFrame', 'Card', 'DataTable', 'Tabs', 'Accordion', 'Button', 'Input', 'Badge', 'Checkbox', 'Switch', 'Separator'];
                     const indexA = order.indexOf(a.name);
                     const indexB = order.indexOf(b.name);
                     
@@ -170,7 +170,7 @@ export const Canvas = ({ thread, canvasItems, viewMode }) => {
                     return 0;
                   })
                   .map((item) => {
-                  const isFullWidth = ['DataTable', 'Tabs', 'Accordion', 'CodeFrame', 'Hero'].includes(item.name);
+                  const isFullWidth = ['DataTable', 'Tabs', 'Accordion', 'CodeFrame'].includes(item.name);
                   const isMedium = ['Card'].includes(item.name);
                   const isSmall = ['Button', 'Input', 'Badge', 'Checkbox', 'Switch', 'Separator'].includes(item.name);
                   
@@ -192,7 +192,9 @@ export const Canvas = ({ thread, canvasItems, viewMode }) => {
                       <div className={cn("relative group/comp", hasCodeFrame && "h-full")}>
                         {!hasCodeFrame && <div className="absolute -inset-1 bg-brand/20 blur-xl opacity-0 group-hover/comp:opacity-100 transition-opacity duration-700 rounded-[2.5rem]" />}
                         <div className={cn("relative", hasCodeFrame && "h-full")}>
-                          {item.component}
+                          {item.name === 'CodeFrame' 
+                            ? React.cloneElement(item.component as any, { isLoading: isStreaming })
+                            : item.component}
                         </div>
                       </div>
                     </div>

@@ -13,24 +13,12 @@ import {
   Tabs,
   Accordion,
   DataTable,
-  Hero,
+
   CodeFrame
 } from "./wrappers";
 
 export const registry = [
-  {
-    name: "Hero",
-    description: "The primary header section for landing pages. Includes a badge, large title, subtitle, and call-to-action buttons.",
-    component: Hero,
-    propsSchema: z.object({
-      badge: z.string().optional(),
-      title: z.string().optional(),
-      subtitle: z.string().optional(),
-      ctaText: z.string().optional(),
-      secondaryCtaText: z.string().optional(),
-      className: z.string().optional()
-    })
-  },
+
   {
     name: "CodeFrame",
     description: "Renders raw HTML/CSS inside an isolated iframe. Use this for full-page previews, custom landing pages, or when standard components don't fit.",
@@ -70,8 +58,8 @@ export const registry = [
     propsSchema: z.object({
       title: z.string().optional(),
       columns: z.array(z.object({
-        key: z.string(),
-        label: z.string()
+        key: z.string().optional(),
+        label: z.string().optional()
       })).describe("Column definitions").optional(),
       data: z.array(z.any()).describe("Table row data").optional(),
       className: z.string().optional()
