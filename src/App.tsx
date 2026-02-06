@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import { cn } from './lib/utils';
 import { TamboProvider } from "@tambo-ai/react";
@@ -15,7 +15,7 @@ interface Theme {
 // Wrapper components to handle navigation
 const LandingWrapper = () => {
   const navigate = useNavigate();
-  return <Landing onLaunch={() => navigate('/chat')} />;
+  return <Landing onLaunch={(prompt) => navigate('/chat', { state: { prompt, isNew: true } })} />;
 };
 
 const ChatInterfaceWrapper = () => {

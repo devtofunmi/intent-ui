@@ -14,11 +14,28 @@
     --card: 240 10% 4%;
     --card-foreground: 0 0% 100%;
 
+    --popover: 240 10% 4%;
+    --popover-foreground: 0 0% 100%;
+
     --primary: 0 0% 100%;
     --primary-foreground: 240 10% 2%;
 
-    --border: 240 5% 10%;
-    --radius: 1.5rem;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 240 4.9% 83.9%;
+    --radius: 0.75rem;
   }
 
   /* Theme Presets */
@@ -155,7 +172,6 @@ body {
   .inner-glow {
     box-shadow: inset 0 1px 1px 0 hsla(0, 0%, 100%, 0.1);
   }
-
 
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
