@@ -63,7 +63,6 @@ export const HistorySidebar = ({
               <ChevronLeft size={20} />
             </button>
             <div className="flex flex-col">
-              <span className="text-[9px] font-black uppercase tracking-[0.4em] text-brand">Living Archive</span>
               <span className="text-sm font-black text-white tracking-widest uppercase">History</span>
             </div>
           </div>
@@ -71,13 +70,13 @@ export const HistorySidebar = ({
             {threads && threads.length > 0 && (
                  <button 
                    onClick={() => setIsDeletingAll(true)}
-                   className="w-10 h-10 bg-zinc-900 border border-white/10 text-zinc-400 hover:text-white hover:bg-red-500/20 hover:border-red-500/50 rounded-xl flex items-center justify-center transition-all shadow-xl"
+                   className="w-10 h-10 bg-zinc-900 border border-white/10 text-zinc-400 hover:text-white hover:bg-red-500/20 hover:border-red-500/50 rounded-xl flex items-center justify-center transition-all shadow-none"
                    title="Clear All History"
                  >
                    <Trash2 size={18} />
                  </button>
             )}
-            <button onClick={handleNewThread} className="w-10 h-10 bg-brand text-white rounded-xl flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-xl brand-glow border border-brand/20">
+            <button onClick={handleNewThread} className="w-10 h-10 bg-brand text-white rounded-xl flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-none brand-glow border border-brand/20">
               <Plus size={20} />
             </button>
             <button 
@@ -92,7 +91,7 @@ export const HistorySidebar = ({
         <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-3 relative z-10 scrollbar-hide">
           {!threads || threads.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center text-center p-12 space-y-6">
-              <div className="w-16 h-16 rounded-[1.5rem] bg-zinc-900 border border-white/5 flex items-center justify-center shadow-2xl relative noise overflow-hidden">
+              <div className="w-16 h-16 rounded-[1.5rem] bg-zinc-900 border border-white/5 flex items-center justify-center shadow-none relative noise overflow-hidden">
                  <div className="absolute inset-0 bg-brand/10 blur-xl rounded-full animate-pulse" />
                 <History size={24} className="text-zinc-600 relative z-10" />
               </div>
@@ -101,7 +100,7 @@ export const HistorySidebar = ({
           ) : (
             threads.map((t) => (
               <div key={t.id} className={cn(
-                "group relative flex items-center gap-4 p-4 rounded-2xl transition-all duration-500 border glass-card noise overflow-hidden",
+                "group relative flex items-center gap-4 p-4 rounded-2xl transition-all duration-500 border glass-card noise overflow-hidden shadow-none",
                 activeThreadId === t.id 
                   ? "border-brand/30 bg-brand/[0.03]" 
                   : "border-white/[0.03] bg-transparent hover:bg-white/[0.02] hover:border-white/10"
@@ -135,7 +134,7 @@ export const HistorySidebar = ({
                 
                 <button 
                   onClick={() => setDeletingThreadId(t.id)} 
-                  className="opacity-0 group-hover:opacity-100 p-2 hover:bg-brand text-zinc-500 hover:text-white rounded-xl transition-all duration-300 shadow-xl"
+                  className="opacity-0 group-hover:opacity-100 p-2 hover:bg-brand text-zinc-500 hover:text-white rounded-xl transition-all duration-300 shadow-none"
                   title="Deconstruct Session"
                 >
                   <Trash2 size={14} />
@@ -152,7 +151,7 @@ export const HistorySidebar = ({
        {/* Delete Confirmation Modal */}
        {(deletingThreadId || isDeletingAll) && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm p-6 animate-in fade-in zoom-in-95">
-          <div className="w-full max-w-md bg-zinc-900 border border-white/10 p-6 rounded-3xl shadow-2xl relative overflow-hidden">
+          <div className="w-full max-w-md bg-zinc-900 border border-white/10 p-6 rounded-3xl shadow-none relative overflow-hidden">
              <div className="absolute top-0 left-0 w-full h-1 bg-brand" />
              <h3 className="text-xl font-bold text-white mb-2">Confirm Deletion</h3>
              <p className="text-zinc-400 mb-6">
@@ -169,7 +168,7 @@ export const HistorySidebar = ({
                </button>
                <button 
                  onClick={isDeletingAll ? confirmDeleteAll : confirmDeleteThread}
-                 className="px-4 py-2 rounded-xl bg-brand text-white hover:opacity-90 transition-opacity text-sm font-bold shadow-lg brand-glow"
+                 className="px-4 py-2 rounded-xl bg-brand text-white hover:opacity-90 transition-opacity text-sm font-bold shadow-none brand-glow"
                >
                  Confirm Delete
                </button>

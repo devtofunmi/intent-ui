@@ -41,10 +41,6 @@ export const ChatSidebar = ({
           >
             <ChevronRight size={20} />
           </button>
-          <div className="flex flex-col">
-            <span className="text-[9px] font-black uppercase tracking-[0.4em] text-brand">Neural Port</span>
-            <span className="text-sm font-black text-white tracking-widest uppercase">Commander</span>
-          </div>
         </div>
 
       </div>
@@ -63,8 +59,8 @@ export const ChatSidebar = ({
               <div className={cn(
                 "max-w-[85%] rounded-[2rem] p-6 text-[14px] leading-relaxed transition-all relative noise overflow-hidden",
                 isUser 
-                  ? 'bg-brand text-white rounded-tr-none' 
-                  : 'glass-card text-zinc-300 rounded-tl-none premium-border'
+                  ? 'bg-brand text-white rounded-tr-none shadow-none' 
+                  : 'glass-card text-zinc-300 rounded-tl-none premium-border shadow-none'
               )}>
                 {isUser && <div className="absolute inset-0 bg-white/10 opacity-20 group-hover:opacity-30 transition-opacity" />}
                 <p className="relative z-10 font-medium">
@@ -93,7 +89,7 @@ export const ChatSidebar = ({
         })}
         {isPending && (
           <div className="flex flex-col items-start group animate-in fade-in slide-in-from-bottom-4 duration-500">
-            <div className="glass-card text-zinc-300 rounded-[2rem] rounded-tl-none p-6 premium-border noise overflow-hidden relative">
+            <div className="glass-card text-zinc-300 rounded-[2rem] rounded-tl-none p-6 premium-border noise overflow-hidden relative shadow-none">
               <div className="flex gap-1.5 items-center">
                 <div className="w-1.5 h-1.5 rounded-full bg-brand animate-bounce [animation-delay:-0.3s]" />
                 <div className="w-1.5 h-1.5 rounded-full bg-brand animate-bounce [animation-delay:-0.15s]" />
@@ -114,12 +110,12 @@ export const ChatSidebar = ({
             onChange={(e) => setValue(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
             placeholder="Neural instruction..."
-            className="w-full bg-zinc-950/80 border border-white/10 rounded-2xl px-6 py-5 pr-16 text-white text-sm font-bold placeholder:text-zinc-700 outline-none focus:border-brand/50 transition-all shadow-2xl relative z-10 noise"
+            className="w-full bg-zinc-950/80 border border-white/10 rounded-2xl px-6 py-5 pr-16 text-white text-sm font-bold placeholder:text-zinc-700 outline-none focus:border-brand/50 transition-all shadow-none relative z-10 noise"
           />
           <button 
             onClick={handleSubmit}
             disabled={isPending || !thread}
-            className="absolute right-3 top-3 bottom-3 aspect-square bg-brand text-white rounded-[1.2rem] flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-2xl brand-glow border border-brand/20 z-20 disabled:opacity-50 disabled:grayscale"
+            className="absolute right-3 top-3 bottom-3 aspect-square bg-brand text-white rounded-[1.2rem] flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-none brand-glow border border-brand/20 z-20 disabled:opacity-50 disabled:grayscale"
           >
             {isPending ? (
               <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
