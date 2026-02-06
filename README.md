@@ -1,73 +1,93 @@
 # INTENT UI
 
-### Intent-Driven Generative UI powered by Tambo
+### Intent-Driven Generative UI Platform
 
-**Intent UI** is a Generative UI engine built with **Tambo** where the interface is determined entirely by user intent.
+**Intent UI** is a "Prompt-to-Platform" engine that generates **high-fidelity, interactive React UIs** based on natural language.
 
-Instead of navigating static screens, users describe what they want, and the AI **decides which React components to render, remove, and reconfigure in real time**.
-
-This project demonstrates how Generative UI can replace fixed layouts with adaptive, AI-driven interfaces.
+Unlike traditional generative UI that just outputs text or static HTML, Intent UI streams **live React components**, renders them in real-time, and provides a full **embedded IDE** (Sandpack) for code inspection and editing. You can then **export your creation** as a ZIP file or **push directly to GitHub** as a new repository.
 
 ---
 
-## What Intent UI Does
+## Features
 
-- **Intent → Interface**  
-  Natural language prompts directly control UI composition (e.g. dashboards, tables, metrics, activity feeds).
+### Generative Engine (Tambo)
 
-- **AI-Driven Component Selection (Tambo)**  
-  Using Tambo’s component registry, the AI autonomously selects and configures high-fidelity React components based on user intent.
+- **Natural Language to UI**: Describe dashboard, landing pages, or application interfaces, and watch them build instantly.
+- **Component Streaming**: Uses `@tambo-ai/react` to stream component props and structures in real-time.
+- **Context Awareness**: Maintains conversation history to iteratively refine the interface.
 
-- **Progressive UI Synthesis**  
-  Interfaces are built section-by-section as the AI reasons, rather than generated as a static export.
+### Dual-Mode Canvas
 
-- **Dynamic Layout Handling**  
-  Components automatically adapt grid span, hierarchy, and density to fit the requested interface context.
+- **Visual Preview**: Interact with the generated application in a high-fidelity rendering environment.
+- **Code View (Sandpack)**: Switch to a full browser-based IDE (powered by CodeSandbox) to inspect files, edit code, and see changes live.
 
-- **Session History**  
-  Each UI generation is preserved, allowing users to revisit or branch previous interface states.
+### Seamless Export
 
----
+- **One-Click GitHub Push**: Connect your GitHub account and push your generated app to a new repository instantly.
+- **ZIP Download**: Export a standard Vite + React project structure ready for local development.
 
-## Core Features
+### Modern Stack
 
-### Component Registry (Tambo-Powered)
-
-A curated set of schema-validated React components registered with Tambo, enabling the AI to choose and configure them autonomously:
-
-- `DataSummary` – High-density analytics and system status
-- `MetricGrid` / `Metric` – KPI tracking and trends
-- `DataTable` – Transactional or operational tables
-- `ActivityFeed` – Chronological system or user activity
-- `UserOverview` – Profile-level command headers
-- Marketing sections – Hero, Features, Pricing, Stats, Testimonials
-
-### Interactive Generative Flow
-
-User prompts and UI interactions continuously influence the interface.  
-The AI responds by **changing the UI**, not just generating text.
-
----
-
-## Design Philosophy
-
-Intent UI uses a focused dark-mode **Command Center** aesthetic optimized for dense, productivity-oriented interfaces:
-
-- Glassmorphism for visual layering
-- Subtle procedural noise for material depth
-- Micro-animations (scanning lines, pulses) to signal active synthesis
-
-Design supports the Generative UI experience without overshadowing functionality.
+- **Shadcn UI & Tailwind**: Generated apps use industry-standard libraries for beautiful, accessible, and maintainable code.
+- **Framer Motion**: Smooth animations for generation and transitions.
+- **React 19**: Built on the latest React patterns.
 
 ---
 
 ## Architecture
 
-- **Framework:** React 19 + Vite
-- **Language:** TypeScript (strict mode)
-- **Styling:** Tailwind CSS + Framer Motion
-- **Schemas:** Zod-validated component definitions
-- **Generative Engine:** `@tambo-ai/react`
+- **Frontend**: React 19 + Vite + TypeScript
+- **AI Orchestration**: `@tambo-ai/react` (Tambo SDK)
+- **Code Environment**: `@codesandbox/sandpack-react`
+- **Styling**: Tailwind CSS + `clsx` + `tailwind-merge`
+- **Integrations**:
+  - **Octokit**: GitHub API integration for repo creation and commits.
+  - **JSZip**: Client-side project packaging.
+
+---
+
+## Quick Start
+
+### 1. Clone & Install
+
+```bash
+git clone https://github.com/yourusername/intent-ui.git
+cd intent-ui
+npm install
+```
+
+### 2. Environment Setup
+
+Create a `.env` file in the root directory:
+
+```bash
+cp .env.example .env
+```
+
+Add your required keys:
+
+```env
+# Required for AI Generation
+VITE_TAMBO_PUBLIC_KEY=your_tambo_public_key
+
+# Optional: GitHub OAuth Client ID (for production auth flow)
+# For local dev, you can use a Personal Access Token (PAT) directly in the UI
+VITE_GITHUB_CLIENT_ID=your_github_client_id
+```
+
+### 3. Run Locally
+
+```bash
+npm run dev
+```
+
+### 4. GitHub Connection (Local Dev)
+
+When running locally, the OAuth redirect flow typically requires a backend component to exchange tokens. Intent UI detects local environments and provides a **Personal Access Token (PAT)** fallback:
+
+1. Generate a GitHub PAT with `repo` and `user` scopes.
+2. Click "Connect GitHub" in the UI.
+3. Paste your PAT to authenticate instantly.
 
 ---
 
@@ -75,33 +95,21 @@ Design supports the Generative UI experience without overshadowing functionality
 
 ```text
 src/
-├─ components/     # Registered UI components
-├─ registry/       # Tambo component definitions & schemas
-├─ pages/          # Workspace and demo flows
-├─ lib/            # Utilities
+├── components/
+│   ├── layout/       # App shell (Canvas, Header, Sidebars)
+│   ├── modals/       # GitHub & Auth modals
+│   ├── registry/     # Component mapping for AI
+│   └── ui/           # Shadcn UI primitives
+├── lib/
+│   ├── github/       # Octokit integration & Auth context
+│   └── export-utils.ts # ZIP generation logic
+├── pages/
+│   ├── Landing.tsx   # Zero-state entry point
+│   ├── ChatInterface.tsx # Main controller & layout
+│   └── AuthCallback.tsx # OAuth handler
+└── main.tsx          # App entry
 ```
 
 ---
 
-## Quick Start
-
-1. **Clone and Install**
-
-   ```bash
-   npm install
-   ```
-
-2. **Configure Environment**
-   Copy `.env.example` to a new file named `.env` and add your Tambo public key:
-
-   ```bash
-   cp .env.example .env
-   ```
-
-   Open `.env` and set your key:
-   `VITE_TAMBO_PUBLIC_KEY=your_key_here`
-
-3. **Run Development Server**
-   ```bash
-   npm run dev
-   ```
+_Built for the future of interface design._

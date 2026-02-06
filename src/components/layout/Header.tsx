@@ -1,7 +1,8 @@
 import React from 'react';
-import { History, ChevronLeft, Monitor, Code2, Download } from 'lucide-react';
+import { History, ChevronLeft, Monitor, Code2, Download, Github, LogOut, Cloud } from 'lucide-react';
 import { HeaderProps } from '../../types';
 import { cn } from '../../lib/utils';
+import { useGitHub } from '../../lib/github/context';
 
 export const Header: React.FC<HeaderProps> = ({ 
   isHistoryOpen, 
@@ -14,6 +15,8 @@ export const Header: React.FC<HeaderProps> = ({
   handleExport,
   canvasItems
 }) => {
+  const { isConnected, user, connect, disconnect } = useGitHub();
+
   return (
     <header className="h-20 border-b border-white/5 flex items-center justify-between px-4 md:px-8 bg-zinc-950/50 backdrop-blur-2xl z-[40] relative noise">
       <div className="flex items-center gap-3 md:gap-6 min-w-0">
@@ -71,12 +74,49 @@ export const Header: React.FC<HeaderProps> = ({
               >
                 <Download size={14} className="md:w-3 md:h-3" /> <span className="hidden xl:inline">Export</span>
               </button>
+
+              {isConnected && (
+                <button 
+                  onClick={() => window.dispatchEvent(new CustomEvent('intent-ui-github-push'))}
+                  className="flex items-center gap-2 px-2 md:px-3 py-1.5 rounded-lg bg-brand text-white text-[9px] font-black uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-none shrink-0 brand-glow"
+                  title="Deploy to GitHub"
+                >
+                  <Cloud size={14} className="md:w-3 md:h-3" /> <span className="hidden xl:inline">Deploy</span>
+                </button>
+              )}
             </div>
           )}
         </div>
       </div>
 
       <div className="flex items-center gap-3 md:gap-6 shrink-0">
+        {/* GitHub Connection */}
+        <div className="flex items-center gap-2">
+          {isConnected ? (
+            <div className="flex items-center gap-3 p-1 pl-3 bg-white/5 border border-white/10 rounded-full hover:border-brand/30 transition-all group">
+              <div className="flex flex-col items-end hidden md:flex">
+                <span className="text-[9px] font-black text-white leading-none uppercase tracking-tighter">{user?.login}</span>
+                <span className="text-[8px] text-zinc-500 leading-tight">Connected</span>
+              </div>
+              <img src={user?.avatar_url} alt={user?.login} className="w-8 h-8 rounded-full border border-white/20" />
+              <button 
+                onClick={disconnect}
+                className="p-2 text-zinc-500 hover:text-red-400 transition-colors"
+                title="Disconnect GitHub"
+              >
+                <LogOut size={14} />
+              </button>
+            </div>
+          ) : (
+            <button 
+              onClick={connect}
+              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-zinc-900 border border-white/5 text-zinc-400 hover:text-white hover:border-white/20 transition-all text-[10px] font-black uppercase tracking-widest"
+            >
+              <Github size={16} /> <span className="hidden sm:inline">Connect GitHub</span>
+            </button>
+          )}
+        </div>
+
         {!isSidebarOpen && (
           <button 
             onClick={() => setSidebarOpen(true)} 

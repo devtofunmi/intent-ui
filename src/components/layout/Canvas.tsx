@@ -3,9 +3,13 @@ import { cn } from '../../lib/utils';
 import * as SandpackReact from "@codesandbox/sandpack-react";
 import JSZip from 'jszip';
 import { generateAppCode, generateComponentCode } from '../../lib/export-utils';
+import { useGitHub } from '../../lib/github/context';
+import { GithubPushModal } from '../modals/GithubPushModal';
 
 export const Canvas = ({ thread, canvasItems, viewMode }) => {
   const [isExporting, setIsExporting] = useState(false);
+  const [isGithubModalOpen, setGithubModalOpen] = useState(false);
+  const { token } = useGitHub();
   const hasCodeFrame = canvasItems.some(i => i.name === 'CodeFrame');
 
   const appCode = useMemo(() => generateAppCode(canvasItems), [canvasItems]);
@@ -83,7 +87,12 @@ export const Canvas = ({ thread, canvasItems, viewMode }) => {
   // Listen for export events from the Header
   React.useEffect(() => {
     window.addEventListener('intent-ui-export', handleLocalExport);
-    return () => window.removeEventListener('intent-ui-export', handleLocalExport);
+    const handleGithubPushEvent = () => setGithubModalOpen(true);
+    window.addEventListener('intent-ui-github-push', handleGithubPushEvent);
+    return () => {
+      window.removeEventListener('intent-ui-export', handleLocalExport);
+      window.removeEventListener('intent-ui-github-push', handleGithubPushEvent);
+    };
   }, [handleLocalExport]);
 
   if (!thread) {
@@ -270,6 +279,13 @@ export const Canvas = ({ thread, canvasItems, viewMode }) => {
           </div>
         )}
       </div>
+      <GithubPushModal 
+        isOpen={isGithubModalOpen}
+        onClose={() => setGithubModalOpen(false)}
+        thread={thread}
+        files={projectFiles}
+        token={token || ''}
+      />
     </div>
   );
 };

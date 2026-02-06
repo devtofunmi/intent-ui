@@ -43,7 +43,7 @@ const Landing: React.FC<LandingProps> = ({ onLaunch }) => {
     {
       icon: Zap,
       title: "Instant Synthesis",
-      description: "From zero to full-stack React components in seconds. Real-time generation that feels like magic."
+      description: "From zero to high-fidelity React components in seconds. Real-time generation that feels like magic."
     },
     {
       icon: Shield,
