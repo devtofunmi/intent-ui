@@ -37,23 +37,27 @@ export const GithubPushModal: React.FC<GithubPushModalProps> = ({
       const octokit = new Octokit({ auth: token });
       
       // 1. Create Repository
+      // 1. Create Repository (auto_init: true is required to avoid "Repository is empty" error)
       const { data: repo } = await octokit.rest.repos.createForAuthenticatedUser({
         name: repoName,
         description,
         private: isPrivate,
-        auto_init: false // We will create the first commit manually
+        auto_init: true 
       });
 
       const owner = repo.owner.login;
       const name = repo.name;
+      const defaultBranch = repo.default_branch;
 
-      // 2. Prepare files for the "Atomic Commit"
-      // We use the simpler method of creating one commit with all files
-      // by creating a tree and then a commit.
-      
-      // Get the default branch (usually 'main' or 'master')
-      // Since it's a new empty repo, we need to create the initial ref
-      
+      // 2. Get the initial commit (created by auto_init)
+      const { data: ref } = await octokit.rest.git.getRef({
+        owner,
+        repo: name,
+        ref: `heads/${defaultBranch}`,
+      });
+      const latestCommitSha = ref.object.sha;
+
+      // 3. Prepare files for the "Atomic Commit"
       const fileEntries = Object.entries(files).map(([path, content]) => ({
         path: path.startsWith('/') ? path.slice(1) : path,
         mode: '100644' as const,
@@ -61,26 +65,27 @@ export const GithubPushModal: React.FC<GithubPushModalProps> = ({
         content: typeof content === 'string' ? content : content.code
       }));
 
-      // Create Tree
+      // 4. Create Tree
       const { data: tree } = await octokit.rest.git.createTree({
         owner,
         repo: name,
         tree: fileEntries
       });
 
-      // Create Commit
+      // 5. Create Commit (linked to the initial commit)
       const { data: commit } = await octokit.rest.git.createCommit({
         owner,
         repo: name,
-        message: '🚀 Initial commit: Synthesized with Intent UI',
-        tree: tree.sha
+        message: '🚀 Synthesized with Intent UI',
+        tree: tree.sha,
+        parents: [latestCommitSha]
       });
 
-      // Create/Update main branch
-      await octokit.rest.git.createRef({
+      // 6. Update main branch
+      await octokit.rest.git.updateRef({
         owner,
         repo: name,
-        ref: 'refs/heads/main',
+        ref: `heads/${defaultBranch}`,
         sha: commit.sha
       });
 
