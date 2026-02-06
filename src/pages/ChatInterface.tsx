@@ -169,7 +169,7 @@ const ChatInterface = React.memo(({ onBackToLanding }: ChatInterfaceProps) => {
       }
     });
     return Object.values(registryMap);
-  }, [thread]);
+  }, [thread?.id, thread?.messages?.length, isPending]);
 
   // Messages for the chat sidebar (exclude messages that only contain tool results)
   const chatHistory = useMemo(() => {
@@ -178,7 +178,7 @@ const ChatInterface = React.memo(({ onBackToLanding }: ChatInterfaceProps) => {
       const text = m.content?.find((c: any) => c.type === 'text')?.text;
       return text && text.trim() !== "";
     });
-  }, [thread]);
+  }, [thread?.id, thread?.messages?.length, isPending]);
 
 
 
