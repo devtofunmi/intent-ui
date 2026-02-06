@@ -1,5 +1,4 @@
-import React from 'react';
-import { History, ChevronLeft, Monitor, Code2, Download, Github, LogOut, Cloud } from 'lucide-react';
+import { History, ChevronLeft, Monitor, Code2, Download, Github, LogOut, Cloud, Laptop, Tablet, Smartphone } from 'lucide-react';
 import { HeaderProps } from '../../types';
 import { cn } from '../../lib/utils';
 import { useGitHub } from '../../lib/github/context';
@@ -12,6 +11,8 @@ export const Header: React.FC<HeaderProps> = ({
   onBack,
   viewMode,
   setViewMode,
+  viewportSize,
+  setViewportSize,
   handleExport,
   canvasItems,
   isPending
@@ -69,6 +70,42 @@ export const Header: React.FC<HeaderProps> = ({
                   <Code2 size={14} className="md:w-3 md:h-3" /> <span className="hidden xl:inline">Editor</span>
                 </button>
               </div>
+
+              {/* Viewport Toggles */}
+              {viewMode === 'preview' && (
+                <div className="hidden md:flex items-center gap-1 border-r border-white/10 pr-1.5 md:pr-2 mr-0.5 md:mr-1">
+                  <button 
+                    onClick={() => setViewportSize('desktop')}
+                    className={cn(
+                      "p-1.5 rounded-md transition-all",
+                      viewportSize === 'desktop' ? "bg-white/10 text-white" : "text-zinc-500 hover:text-white"
+                    )}
+                    title="Desktop"
+                  >
+                    <Laptop size={14} />
+                  </button>
+                  <button 
+                    onClick={() => setViewportSize('tablet')}
+                    className={cn(
+                      "p-1.5 rounded-md transition-all",
+                      viewportSize === 'tablet' ? "bg-white/10 text-white" : "text-zinc-500 hover:text-white"
+                    )}
+                    title="Tablet"
+                  >
+                    <Tablet size={14} />
+                  </button>
+                  <button 
+                    onClick={() => setViewportSize('mobile')}
+                    className={cn(
+                      "p-1.5 rounded-md transition-all",
+                      viewportSize === 'mobile' ? "bg-white/10 text-white" : "text-zinc-500 hover:text-white"
+                    )}
+                    title="Mobile"
+                  >
+                    <Smartphone size={14} />
+                  </button>
+                </div>
+              )}
               
               <button 
                 onClick={handleExport}

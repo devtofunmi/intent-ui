@@ -7,7 +7,19 @@ import { useGitHub } from '../../lib/github/context';
 import { GithubPushModal } from '../modals/GithubPushModal';
 import { VercelDeployModal } from '../modals/VercelDeployModal';
 
-export const Canvas = ({ thread, canvasItems, viewMode, isStreaming }: { thread: any, canvasItems: any[], viewMode: string, isStreaming: boolean }) => {
+export const Canvas = ({ 
+  thread, 
+  canvasItems, 
+  viewMode, 
+  isStreaming,
+  viewportSize = 'desktop'
+}: { 
+  thread: any, 
+  canvasItems: any[], 
+  viewMode: string, 
+  isStreaming: boolean,
+  viewportSize?: 'desktop' | 'tablet' | 'mobile'
+}) => {
   const [isExporting, setIsExporting] = useState(false);
   const [isGithubModalOpen, setGithubModalOpen] = useState(false);
   const [isVercelModalOpen, setVercelModalOpen] = useState(false);
@@ -241,9 +253,21 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
           <div className="flex-1 flex flex-col min-h-0 overflow-hidden h-full animate-in fade-in duration-500">
             {viewMode === 'preview' ? (
               <div className={cn(
-                "grid grid-cols-1 md:grid-cols-12 items-start",
-                hasCodeFrame ? "gap-0 h-full flex-1" : "gap-8 md:gap-12 pb-10"
+                "flex-1 flex flex-col items-center",
+                !hasCodeFrame && "overflow-y-auto"
               )}>
+                <div 
+                  className={cn(
+                    "transition-all duration-700 ease-in-out w-full",
+                    viewportSize === 'tablet' ? "max-w-[768px]" : 
+                    viewportSize === 'mobile' ? "max-w-[375px]" : "max-w-full",
+                    !hasCodeFrame && "px-6 py-12 md:px-10 md:py-20"
+                  )}
+                >
+                  <div className={cn(
+                    "grid grid-cols-1 md:grid-cols-12 items-start",
+                    hasCodeFrame ? "gap-0 h-full flex-1" : "gap-8 md:gap-12 pb-10"
+                  )}>
                 {(hasCodeFrame 
                   ? canvasItems.filter(item => item.name === 'CodeFrame')
                   : canvasItems)
@@ -288,6 +312,8 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                     </div>
                   );
                 })}
+                  </div>
+                </div>
               </div>
             ) : (
               <div className="flex-1 bg-[#151515] border-t border-white/5 flex flex-col relative h-full min-h-0">

@@ -122,6 +122,7 @@ const ChatInterface = React.memo(({ onBackToLanding }: ChatInterfaceProps) => {
   const [isSidebarOpen, setSidebarOpen] = useState<boolean>(true);
   const [isHistoryOpen, setHistoryOpen] = useState<boolean>(false);
   const [viewMode, setViewMode] = useState<'preview' | 'code'>('preview');
+  const [viewportSize, setViewportSize] = useState<'desktop' | 'tablet' | 'mobile'>('desktop');
 
   // Handle export project as a zip file
   const handleExport = async () => {
@@ -184,6 +185,8 @@ const ChatInterface = React.memo(({ onBackToLanding }: ChatInterfaceProps) => {
           onBack={onBackToLanding}
           viewMode={viewMode}
           setViewMode={setViewMode}
+          viewportSize={viewportSize}
+          setViewportSize={setViewportSize}
           handleExport={handleExport}
           canvasItems={canvasItems}
         />
@@ -194,6 +197,7 @@ const ChatInterface = React.memo(({ onBackToLanding }: ChatInterfaceProps) => {
           canvasItems={canvasItems}
           viewMode={viewMode}
           isStreaming={isPending}
+          viewportSize={viewportSize}
         />
       </div>
 

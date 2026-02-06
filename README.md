@@ -19,6 +19,7 @@ Unlike traditional generative UI that just outputs text or static HTML, Intent U
 ### Dual-Mode Canvas
 
 - **Visual Preview**: Interact with the generated application in a high-fidelity rendering environment.
+- **Responsive Testing**: Toggle between **Desktop, Tablet, and Mobile** viewports instantly to verify the responsiveness of the generated code.
 - **Live Editor (Sandpack)**: Switch to a full browser-based editor (powered by CodeSandbox) to inspect files, edit code, and see changes live.
 
 ### Seamless Deployment & Export

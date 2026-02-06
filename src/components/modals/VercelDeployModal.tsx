@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
 import { X, Globe, Loader2, CheckCircle2, ArrowRight, ExternalLink, ShieldCheck, Zap } from 'lucide-react';
-import { cn } from '../../lib/utils';
 import { Thread } from '../../types';
 
 interface VercelDeployModalProps {

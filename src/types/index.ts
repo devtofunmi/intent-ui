@@ -50,6 +50,8 @@ export interface HeaderProps {
   onBack: () => void;
   viewMode: 'preview' | 'code';
   setViewMode: (mode: 'preview' | 'code') => void;
+  viewportSize: 'desktop' | 'tablet' | 'mobile';
+  setViewportSize: (size: 'desktop' | 'tablet' | 'mobile') => void;
   handleExport: () => void;
   canvasItems: CanvasItem[];
 }
