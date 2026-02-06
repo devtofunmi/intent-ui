@@ -46,9 +46,9 @@ export const Card = ({ title, description, content, footer, className }: any) =>
 export const Tabs = ({ defaultValue, items, className }: any) => (
   <ShadcnTabs defaultValue={defaultValue} className={cn("w-full", className)}>
     <TabsList className="bg-zinc-900/50 border border-white/5 h-auto p-1 rounded-xl">
-      {items?.map((item: any) => (
+      {items?.map((item: any, idx: number) => (
         <TabsTrigger 
-          key={item.value} 
+          key={item.value || idx} 
           value={item.value}
           className="rounded-lg px-6 py-2.5 data-[state=active]:bg-brand data-[state=active]:text-white transition-all uppercase text-[10px] font-black tracking-widest"
         >
@@ -56,8 +56,8 @@ export const Tabs = ({ defaultValue, items, className }: any) => (
         </TabsTrigger>
       ))}
     </TabsList>
-    {items?.map((item: any) => (
-      <TabsContent key={item.value} value={item.value} className="mt-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+    {items?.map((item: any, idx: number) => (
+      <TabsContent key={item.value || idx} value={item.value} className="mt-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
         {item.content}
       </TabsContent>
     ))}
@@ -128,16 +128,16 @@ export const DataTable = ({ title, columns, data, className }: any) => (
       <Table>
         <TableHeader className="bg-white/5">
           <TableRow>
-            {columns?.map((col: any) => (
-              <TableHead key={col.key}>{col.label}</TableHead>
+            {columns?.map((col: any, idx: number) => (
+              <TableHead key={col.key || idx}>{col.label}</TableHead>
             ))}
           </TableRow>
         </TableHeader>
         <TableBody>
           {data?.map((row: any, i: number) => (
             <TableRow key={i} className="border-white/5 hover:bg-white/[0.02]">
-              {columns?.map((col: any) => (
-                <TableCell key={col.key}>{row[col.key]}</TableCell>
+              {columns?.map((col: any, idx: number) => (
+                <TableCell key={col.key || idx}>{row[col.key]}</TableCell>
               ))}
             </TableRow>
           ))}

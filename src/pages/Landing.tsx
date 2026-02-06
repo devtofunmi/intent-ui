@@ -144,7 +144,7 @@ const Landing: React.FC<LandingProps> = ({ onLaunch }) => {
 
             <div className="space-y-8">
               <div className="flex flex-wrap justify-center gap-3 pt-4">
-                {["SaaS Landing Page", "Admin Dashboard", "Portfolio with Bento Grid"].map((example) => (
+                {["SaaS Landing Page", "Crypto Analytics Terminal", "Portfolio with Bento Grid"].map((example) => (
                   <button
                     key={example}
                     onClick={() => onTryExample(example)}
