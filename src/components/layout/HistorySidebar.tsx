@@ -1,6 +1,7 @@
 import React from 'react';
 import { Plus, Trash2, History, ChevronLeft } from 'lucide-react';
 import { cn } from '../../lib/utils';
+import { motion } from 'framer-motion';
 
 export const HistorySidebar = ({ 
   isOpen, 
@@ -47,10 +48,17 @@ export const HistorySidebar = ({
 
   return (
     <>
-      <div className={cn(
-        "bg-zinc-950/80 backdrop-blur-3xl border-r border-white/5 flex flex-col transition-[width] duration-500 ease-in-out z-50 noise relative shrink-0",
-        isOpen ? "w-full md:w-80" : "w-0 overflow-hidden"
-      )}>
+      <motion.div 
+        initial={false}
+        animate={{ 
+          width: isOpen ? (window.innerWidth < 768 ? '100%' : 320) : 0,
+          opacity: isOpen ? 1 : 0
+        }}
+        transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+        className={cn(
+          "bg-zinc-950/80 backdrop-blur-3xl border-r border-white/5 flex flex-col z-50 noise relative shrink-0 overflow-hidden"
+        )}
+      >
         {/* Background Glow */}
         <div className="absolute top-0 left-0 w-full h-1/2 bg-brand/5 blur-[100px] rounded-full pointer-events-none opacity-30" />
         
@@ -146,7 +154,7 @@ export const HistorySidebar = ({
 
         {/* Extreme Right Border Shine */}
         <div className="absolute right-0 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-white/10 to-transparent" />
-      </div>
+      </motion.div>
 
        {/* Delete Confirmation Modal */}
        {(deletingThreadId || isDeletingAll) && (

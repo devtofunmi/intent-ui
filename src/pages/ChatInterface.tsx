@@ -124,11 +124,31 @@ const ChatInterface = React.memo(({ onBackToLanding }: ChatInterfaceProps) => {
   const [viewMode, setViewMode] = useState<'preview' | 'code'>('preview');
   const [viewportSize, setViewportSize] = useState<'desktop' | 'tablet' | 'mobile'>('desktop');
 
+  // Smooth Sidebar Toggle Logic: On smaller screens, close one when the other opens
+  React.useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 1280) { // xl breakpoint or lower
+        if (isHistoryOpen) setSidebarOpen(false);
+      }
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [isHistoryOpen]);
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 1280) {
+        if (isSidebarOpen) setHistoryOpen(false);
+      }
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [isSidebarOpen]);
+
   // Handle export project as a zip file
   const handleExport = async () => {
-    // We defer the actual code generation and zipping to a dynamic utility if needed,
-    // but here we can just trigger a custom event or use a ref. 
-    // To keep it simple, we'll use a custom event that Canvas listens for or move the logic to a shared utility.
     const event = new CustomEvent('intent-ui-export');
     window.dispatchEvent(event);
   };

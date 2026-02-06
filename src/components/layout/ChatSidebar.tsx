@@ -2,6 +2,7 @@ import { useRef, useEffect } from 'react';
 import { ArrowRight, ChevronRight, Mic, Square } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { useTamboVoice } from '@tambo-ai/react';
+import { motion } from 'framer-motion';
 
 import { ChatSidebarProps } from '../../types';
 
@@ -53,10 +54,17 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
   };
 
   return (
-    <div className={cn(
-      "bg-zinc-950/80 backdrop-blur-3xl border-l border-white/5 flex flex-col transition-[width] duration-500 ease-in-out z-[45] noise relative shrink-0",
-      isOpen ? "w-full md:w-[450px]" : "w-0 overflow-hidden"
-    )}>
+    <motion.div 
+      initial={false}
+      animate={{ 
+        width: isOpen ? (window.innerWidth < 768 ? '100%' : 450) : 0,
+        opacity: isOpen ? 1 : 0
+      }}
+      transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+      className={cn(
+        "bg-zinc-950/80 backdrop-blur-3xl border-l border-white/5 flex flex-col z-[45] noise relative shrink-0 overflow-hidden"
+      )}
+    >
       {/* Neural Background Ambience */}
       <div className="absolute bottom-0 right-0 w-full h-1/2 bg-brand/5 blur-[100px] rounded-full pointer-events-none opacity-30" />
       
@@ -193,6 +201,6 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
 
       {/* Left Border Shine */}
       <div className="absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-brand/30 to-transparent" />
-    </div>
+    </motion.div>
   );
 };
