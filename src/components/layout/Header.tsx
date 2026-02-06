@@ -89,6 +89,18 @@ export const Header: React.FC<HeaderProps> = ({
                   <Cloud size={14} className="md:w-3 md:h-3" /> <span className="hidden xl:inline">Export to GitHub</span>
                 </button>
               )}
+
+              <button 
+                onClick={() => window.dispatchEvent(new CustomEvent('intent-ui-vercel-deploy'))}
+                disabled={isPending}
+                className="flex items-center gap-2 px-2 md:px-3 py-1.5 rounded-lg bg-white text-black text-[9px] font-black uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-none shrink-0 disabled:opacity-50 disabled:scale-100 disabled:cursor-not-allowed"
+                title="Deploy to Vercel"
+              >
+                <svg width="12" height="12" viewBox="0 0 76 65" fill="none" xmlns="http://www.w3.org/2000/svg" className="md:w-3 md:h-3">
+                  <path d="M37.5274 0L75.0548 65H0L37.5274 0Z" fill="currentColor"/>
+                </svg>
+                <span className="hidden xl:inline">Deploy to Vercel</span>
+              </button>
             </div>
           )}
         </div>

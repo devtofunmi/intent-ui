@@ -5,10 +5,12 @@ import JSZip from 'jszip';
 import { generateAppCode, generateComponentCode } from '../../lib/export-utils';
 import { useGitHub } from '../../lib/github/context';
 import { GithubPushModal } from '../modals/GithubPushModal';
+import { VercelDeployModal } from '../modals/VercelDeployModal';
 
 export const Canvas = ({ thread, canvasItems, viewMode, isStreaming }: { thread: any, canvasItems: any[], viewMode: string, isStreaming: boolean }) => {
   const [isExporting, setIsExporting] = useState(false);
   const [isGithubModalOpen, setGithubModalOpen] = useState(false);
+  const [isVercelModalOpen, setVercelModalOpen] = useState(false);
   const { token } = useGitHub();
   const hasCodeFrame = canvasItems.some(i => i.name === 'CodeFrame');
 
@@ -116,6 +118,12 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   }
 }`,
         active: false
+      },
+      "/vercel.json": {
+        code: JSON.stringify({
+          rewrites: [{ source: "/(.*)", destination: "/index.html" }]
+        }, null, 2),
+        active: false
       }
     };
 
@@ -165,10 +173,13 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   React.useEffect(() => {
     window.addEventListener('intent-ui-export', handleLocalExport);
     const handleGithubPushEvent = () => setGithubModalOpen(true);
+    const handleVercelDeployEvent = () => setVercelModalOpen(true);
     window.addEventListener('intent-ui-github-push', handleGithubPushEvent);
+    window.addEventListener('intent-ui-vercel-deploy', handleVercelDeployEvent);
     return () => {
       window.removeEventListener('intent-ui-export', handleLocalExport);
       window.removeEventListener('intent-ui-github-push', handleGithubPushEvent);
+      window.removeEventListener('intent-ui-vercel-deploy', handleVercelDeployEvent);
     };
   }, [handleLocalExport]);
 
@@ -364,6 +375,12 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         thread={thread}
         files={projectFiles}
         token={token || ''}
+      />
+      <VercelDeployModal 
+        isOpen={isVercelModalOpen}
+        onClose={() => setVercelModalOpen(false)}
+        thread={thread}
+        files={projectFiles}
       />
     </div>
   );
