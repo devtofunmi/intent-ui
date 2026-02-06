@@ -1,198 +1,181 @@
 import { z } from "zod";
-import { DataSummary, dataSummarySchema } from '../components/DataSummary';
-import Metric from '../components/Metric';
-import DataTable from '../components/DataTable';
-import Features from '../components/Features';
-import Pricing from '../components/Pricing';
-import CTA from '../components/CTA';
-import Nav from '../components/Nav';
-import Footer from '../components/Footer';
-import Stats from '../components/Stats';
-import Hero from "../components/Hero";
-import Testimonials from "../components/Testimonials";
-
-import UserOverview from "../components/UserOverview";
-import ActivityFeed from "../components/ActivityFeed";
-import MetricGrid from "../components/MetricGrid";
-import QuickActions from "../components/QuickActions";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
+import { Separator } from "@/components/ui/separator";
+import { Switch } from "@/components/ui/switch";
+import { Textarea } from "@/components/ui/textarea";
+import { Skeleton } from "@/components/ui/skeleton";
+import {
+  Card,
+  Tabs,
+  Accordion,
+  DataTable,
+  Hero,
+  CodeFrame
+} from "./wrappers";
 
 export const registry = [
   {
-    name: "Nav",
-    description: "Main navigation bar. Root of the page. Limit links to a maximum of 3 for premium aesthetic.",
-    component: Nav,
-    propsSchema: z.object({
-      logoText: z.string().nullable().optional(),
-      links: z.array(z.object({ label: z.string().nullable().optional(), href: z.string().nullable().optional() })).nullable().optional().describe("List of navigation links")
-    })
-  },
-  {
     name: "Hero",
-    description: "High-impact introduction for public websites. Displays a bold marketing headline, subtext, and primary CTA.",
+    description: "The primary header section for landing pages. Includes a badge, large title, subtitle, and call-to-action buttons.",
     component: Hero,
     propsSchema: z.object({
-      title: z.string().nullable().optional().describe("Main bold headline"),
-      subtitle: z.string().nullable().optional().describe("Supporting text below the headline"),
-      ctaText: z.string().nullable().optional().describe("Text for the primary button"),
-    }),
-  },
-  {
-    name: "UserOverview",
-    description: "Core dashboard profile header. Shows user avatar, role, status, and system settings. Use this at the top of authenticated dashboard views.",
-    component: UserOverview,
-    propsSchema: z.object({
-      name: z.string().nullable().optional(),
-      role: z.string().nullable().optional().describe("User's access level or job title"),
-      status: z.string().nullable().optional().describe("Current connection or session status"),
-      lastActive: z.string().nullable().optional(),
-      avatar: z.string().nullable().optional().describe("URL or seed for the user profile image")
+      badge: z.string().optional(),
+      title: z.string().optional(),
+      subtitle: z.string().optional(),
+      ctaText: z.string().optional(),
+      secondaryCtaText: z.string().optional(),
+      className: z.string().optional()
     })
   },
   {
-    name: "QuickActions",
-    description: "Utility bar for dashboards. Contains a primary action button, search filter, and common tools (share, download). Place this below the header in apps.",
-    component: QuickActions,
+    name: "CodeFrame",
+    description: "Renders raw HTML/CSS inside an isolated iframe. Use this for full-page previews, custom landing pages, or when standard components don't fit.",
+    component: CodeFrame,
     propsSchema: z.object({
-      primaryText: z.string().nullable().optional().describe("Text for the main action button"),
-      showSearch: z.boolean().nullable().optional(),
-      onAction: z.any().optional()
+      html: z.string().describe("The raw HTML code to render").optional(),
+      className: z.string().optional()
     })
   },
   {
-    name: "MetricGrid",
-    description: "Horizontal row of data summaries for dashboards. Efficiently groups multiple key performance indicators (KPIs).",
-    component: MetricGrid,
+    name: "Button",
+    description: "Standard Shadcn button for actions and navigation.",
+    component: Button,
     propsSchema: z.object({
-      metrics: z.array(z.object({
-        title: z.string().nullable().optional(),
-        value: z.string().nullable().optional(),
-        trend: z.string().nullable().optional()
-      })).nullable().optional()
+      children: z.string().describe("Button label").optional(),
+      variant: z.enum(["default", "destructive", "outline", "secondary", "ghost", "link"]).optional(),
+      size: z.enum(["default", "sm", "lg", "icon"]).optional(),
+      className: z.string().optional()
     })
   },
   {
-    name: "Metric",
-    description: "Individual heavy-impact data point card. Use for single large metrics in a dashboard.",
-    component: Metric,
+    name: "Card",
+    description: "Container for content with optional header and footer. Best for feature cards or dashboard widgets.",
+    component: Card,
     propsSchema: z.object({
-      title: z.string().nullable().optional(),
-      value: z.string().nullable().optional(),
-      trend: z.string().nullable().optional()
+      title: z.string().optional(),
+      description: z.string().optional(),
+      content: z.string().optional().describe("Primary content (text/markdown)"),
+      footer: z.string().optional(),
+      className: z.string().optional()
     })
   },
   {
-    name: "DataSummary",
-    description: "Multi-metric system overview. Use for analytics summaries. Includes mainMetric (label, value, trend), a list of metrics, and a systemLoad percentage.",
-    component: DataSummary,
-    propsSchema: dataSummarySchema
-  },
-  {
-    name: "Dashboard",
-    description: "Alias for DataSummary. Use for analytics summaries.",
-    component: DataSummary,
-    propsSchema: dataSummarySchema
-  },
-  {
-    name: "Table",
-    description: "Structured data list for dashboards. Use for transactions, user lists, or logs. Includes status columns and ID tracking.",
+    name: "DataTable",
+    description: "A structured data table with headers and rows. Good for lists and logs.",
     component: DataTable,
     propsSchema: z.object({
-      title: z.string().nullable().optional(),
-      onAction: z.any().optional()
+      title: z.string().optional(),
+      columns: z.array(z.object({
+        key: z.string(),
+        label: z.string()
+      })).describe("Column definitions").optional(),
+      data: z.array(z.any()).describe("Table row data").optional(),
+      className: z.string().optional()
     })
   },
   {
-    name: "ActivityFeed",
-    description: "Vertical timeline of recent system events or user actions. Great for the sidebar or secondary panels in a dashboard.",
-    component: ActivityFeed,
+    name: "Input",
+    description: "Text input field.",
+    component: Input,
     propsSchema: z.object({
-      title: z.string().nullable().optional(),
+      placeholder: z.string().optional(),
+      type: z.string().optional().default("text"),
+      className: z.string().optional()
+    })
+  },
+  {
+    name: "Badge",
+    description: "Small status indicator.",
+    component: Badge,
+    propsSchema: z.object({
+      children: z.string().optional(),
+      variant: z.enum(["default", "secondary", "destructive", "outline"]).optional(),
+      className: z.string().optional()
+    })
+  },
+  {
+    name: "Checkbox",
+    description: "Toggleable checkbox.",
+    component: Checkbox,
+    propsSchema: z.object({
+      checked: z.boolean().optional(),
+      label: z.string().optional(),
+      className: z.string().optional()
+    })
+  },
+  {
+    name: "Switch",
+    description: "Toggle switch.",
+    component: Switch,
+    propsSchema: z.object({
+      checked: z.boolean().optional(),
+      className: z.string().optional()
+    })
+  },
+  {
+    name: "Separator",
+    description: "Horizontal or vertical divider.",
+    component: Separator,
+    propsSchema: z.object({
+      orientation: z.enum(["horizontal", "vertical"]).optional(),
+      className: z.string().optional()
+    })
+  },
+  {
+    name: "Tabs",
+    description: "Tabbed interface for switching between views.",
+    component: Tabs,
+    propsSchema: z.object({
+      defaultValue: z.string().optional(),
       items: z.array(z.object({
-        title: z.string().nullable().optional(),
-        desc: z.string().nullable().optional(),
-        time: z.string().nullable().optional(),
-        type: z.string().nullable().optional()
-      })).nullable().optional(),
-      onAction: z.any().optional()
+        label: z.string().optional(),
+        value: z.string().optional(),
+        content: z.string().optional()
+      })).optional(),
+      className: z.string().optional()
     })
   },
   {
-    name: "Stats",
-    description: "Trust-building numbers for landing pages (e.g., 'Used by 10k companies'). Distinct from dashboard metrics.",
-    component: Stats,
+    name: "Accordion",
+    description: "Collapsible content sections.",
+    component: Accordion,
     propsSchema: z.object({
-      stats: z.array(z.object({
-        label: z.string().nullable().optional(),
-        value: z.string().nullable().optional()
-      })).nullable().optional()
-    })
-  },
-  {
-    name: "Features",
-    description: "Grid of benefit cards for marketing sites. Explains high-level value propositions to new users.",
-    component: Features,
-    propsSchema: z.object({
-      title: z.string().nullable().optional().describe("Section heading"),
-      features: z.array(z.object({
-        title: z.string().nullable().optional(),
-        description: z.string().nullable().optional(),
-        icon: z.string().nullable().optional().describe("Icon name from Lucide")
-      })).nullable().optional()
-    })
-  },
-  {
-    name: "Pricing",
-    description: "Marketing table of subscription tiers. Used on landing pages to convert users.",
-    component: Pricing,
-    propsSchema: z.object({
-      title: z.string().nullable().optional(),
-      plans: z.array(z.object({
-        name: z.string().nullable().optional(),
-        price: z.string().nullable().optional(),
-        features: z.array(z.string()).nullable().optional(),
-        recommended: z.boolean().nullable().optional()
-      })).nullable().optional()
-    })
-  },
-  {
-    name: "Testimonials",
-    description: "Social proof for landing pages. Displays a grid of user reviews and avatars.",
-    component: Testimonials,
-    propsSchema: z.object({
-      title: z.string().nullable().optional(),
+      type: z.enum(["single", "multiple"]).optional(),
       items: z.array(z.object({
-        name: z.string().nullable().optional(),
-        role: z.string().nullable().optional(),
-        quote: z.string().nullable().optional(),
-        rating: z.number().nullable().optional(),
-        avatar: z.string().nullable().optional()
-      })).nullable().optional()
+        trigger: z.string().optional(),
+        content: z.string().optional()
+      })).optional(),
+      className: z.string().optional()
     })
   },
   {
-    name: "CTA",
-    description: "Final marketing banner for landing pages. Large and bold button to drive conversion.",
-    component: CTA,
+    name: "Label",
+    description: "Semantic label for form elements.",
+    component: Label,
     propsSchema: z.object({
-      title: z.string().nullable().optional(),
-      subtitle: z.string().nullable().optional(),
-      buttonText: z.string().nullable().optional()
+      children: z.string().optional(),
+      className: z.string().optional()
     })
   },
   {
-    name: "Footer",
-    description: "The bottom of marketing pages. Includes copyright and public site links.",
-    component: Footer,
+    name: "Textarea",
+    description: "Multi-line text input.",
+    component: Textarea,
     propsSchema: z.object({
-      logoText: z.string().nullable().optional(),
-      socials: z.array(z.object({
-        label: z.string().nullable().optional(),
-        href: z.string().nullable().optional()
-      })).nullable().optional(),
-      links: z.array(z.object({
-        title: z.string().nullable().optional(),
-        items: z.array(z.object({ label: z.string().nullable().optional(), href: z.string().nullable().optional() })).nullable().optional()
-      })).nullable().optional()
+      placeholder: z.string().optional(),
+      className: z.string().optional()
+    })
+  },
+  {
+    name: "Skeleton",
+    description: "Loading placeholder for components.",
+    component: Skeleton,
+    propsSchema: z.object({
+      className: z.string().optional()
     })
   }
 ];
