@@ -79,12 +79,12 @@ const Landing: React.FC<LandingProps> = ({ onLaunch }) => {
       <nav className="fixed top-4 left-1/2 -translate-x-1/2 z-[100] w-[calc(100%-2rem)] max-w-7xl">
         <div className="bg-white/[0.03] backdrop-blur-2xl border border-white/5 px-6 md:px-10 py-4 rounded-[2rem] flex items-center justify-between font-sans shadow-none">
           <a href="#top" onClick={(e) => handleScroll(e, '#top')} className="flex items-center gap-2 group cursor-pointer">
-             <div className="w-10 h-10 rounded-xl bg-brand flex items-center justify-center brand-glow rotate-[-10deg] group-hover:rotate-0 transition-transform duration-500">
-               <Sparkles size={20} className="text-white animate-pulse" />
-             </div>
-             <div className="text-xl font-black tracking-tighter text-white ml-1 italic uppercase">
-               Init <span className="text-brand">UI</span>
-             </div>
+              <div className="w-8 h-8 rounded-lg bg-brand flex items-center justify-center brand-glow rotate-0 group-hover:rotate-[-10deg] transition-transform duration-500 overflow-hidden">
+                <img src="/favicon.jpeg" alt="Init UI Logo" className="w-full h-full object-cover" />
+              </div>
+              <div className="text-lg font-black tracking-tighter text-white ml-1 italic uppercase">
+                Init <span className="text-brand">UI</span>
+              </div>
           </a>
 
           <div className="hidden md:flex items-center gap-10">
@@ -121,6 +121,7 @@ const Landing: React.FC<LandingProps> = ({ onLaunch }) => {
               <div className="absolute -inset-4 bg-brand/20 blur-3xl opacity-0 group-focus-within:opacity-100 transition-opacity duration-1000 overflow-hidden" />
               <div className="relative z-10">
                 <input
+                  id="hero-prompt-input"
                   type="text"
                   value={value}
                   onChange={(e) => setValue(e.target.value)}
@@ -129,6 +130,7 @@ const Landing: React.FC<LandingProps> = ({ onLaunch }) => {
                   className="w-full bg-white/[0.03] border border-white/10 rounded-[2rem] md:rounded-[2.5rem] px-6 md:px-8 py-5 md:py-6 pr-16 md:pr-24 text-base md:text-lg font-bold text-white placeholder:text-zinc-700 outline-none focus:border-brand/50 transition-all shadow-none noise overflow-hidden"
                 />
                 <button
+                  id="hero-prompt-submit"
                   onClick={onSubmit}
                   disabled={isPending || !value.trim()}
                   className="absolute right-2 md:right-3 top-1/2 -translate-y-1/2 h-10 md:h-12 aspect-square bg-brand text-white rounded-[1.2rem] md:rounded-[1.8rem] flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-none border border-brand/20 z-20 disabled:opacity-50 disabled:grayscale"
@@ -144,8 +146,9 @@ const Landing: React.FC<LandingProps> = ({ onLaunch }) => {
 
             <div className="space-y-8">
               <div className="flex flex-wrap justify-center gap-3 pt-4">
-                {["SaaS Landing Page", "Crypto Analytics Terminal", "Portfolio with Bento Grid"].map((example) => (
+                {["SaaS Landing Page", "Crypto Analytics Terminal", "Portfolio with Bento Grid"].map((example, i) => (
                   <button
+                    id={`example-btn-${i}`}
                     key={example}
                     onClick={() => onTryExample(example)}
                     className="px-6 md:px-8 py-2 md:py-3 rounded-full bg-white/5 border border-white/10 text-[9px] md:text-[10px] font-black uppercase tracking-widest text-zinc-500 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all shadow-none"
@@ -153,6 +156,20 @@ const Landing: React.FC<LandingProps> = ({ onLaunch }) => {
                     {example}
                   </button>
                 ))}
+              </div>
+
+              <div className="flex justify-center mt-10">
+                <div className="flex items-center gap-6 animate-in fade-in duration-1000">
+                  <div className="flex items-center gap-2">
+                    <Github size={10} className="text-zinc-600" />
+                    <span className="text-[9px] font-black uppercase tracking-[0.3em] text-zinc-600">Open Source</span>
+                  </div>
+                  <div className="w-px h-3 bg-white/10" />
+                  <div className="flex items-center gap-2">
+                    <Sparkles size={10} className="text-zinc-600" />
+                    <span className="text-[9px] font-black uppercase tracking-[0.3em] text-zinc-600">AI-Powered</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -240,7 +257,7 @@ const Landing: React.FC<LandingProps> = ({ onLaunch }) => {
             
             <div className="max-w-4xl mx-auto space-y-8 md:space-y-14 relative z-10">
               <div className="space-y-4 md:space-y-6">
-                <h2 className="text-2xl  md:text-7xl font-black text-white tracking-[-0.05em] leading-[1.2] text-gradient italic uppercase">
+                <h2 className="text-xl  md:text-7xl font-black text-white tracking-[-0.05em] leading-[1.2] text-gradient italic uppercase">
                   Ready to initialize <br />
                   <span className="text-white/30 truncate uppercase">your next project?</span>
                 </h2>
@@ -251,8 +268,9 @@ const Landing: React.FC<LandingProps> = ({ onLaunch }) => {
               
               <div className="pt-2 md:pt-4 flex flex-col items-center justify-center">
                 <button 
+                  id="final-cta-launch"
                   onClick={() => onLaunch()}
-                  className="w-full sm:w-auto px-10 md:px-16 py-5 md:py-7 bg-brand text-white rounded-[1.5rem] md:rounded-[2.5rem] font-black text-sm md:text-base hover:scale-105 transition-all duration-500 active:scale-95 shadow-none flex items-center justify-center gap-3 md:gap-4 group brand-glow inner-glow relative overflow-hidden uppercase tracking-widest"
+                  className="w-full sm:w-auto px-5 md:px-16 py-5 md:py-7 bg-brand text-white rounded-[1.5rem] md:rounded-[2.5rem] font-black text-sm md:text-base hover:scale-105 transition-all duration-500 active:scale-95 shadow-none flex items-center justify-center gap-3 md:gap-4 group brand-glow inner-glow relative overflow-hidden uppercase tracking-widest"
                 >
                    <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 skew-x-[-30deg]" />
                   <span className="relative z-10 font-black">Get Started Now</span>
@@ -272,10 +290,15 @@ const Landing: React.FC<LandingProps> = ({ onLaunch }) => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-24 relative z-10 mb-20 xl:mb-40">
               <div className="space-y-12 text-left">
                 <div className="space-y-6">
-                  <div className="text-4xl font-black tracking-[-0.05em] text-white brand-gradient-text uppercase leading-none italic">
-                    Init <span className="text-brand">UI</span>
+                  <div className="flex items-center gap-4">
+                    <div className="w-8 h-8 rounded-lg bg-brand flex items-center justify-center brand-glow rotate-0 group-hover:rotate-[-10deg] transition-transform duration-500 overflow-hidden">
+                     <img src="/favicon.jpeg" alt="Init UI Logo" className="w-full h-full object-cover" />
+                    </div>
+                    <div className="text-xl font-black tracking-[-0.05em] text-white brand-gradient-text uppercase leading-none italic">
+                      Init <span className="text-brand">UI</span>
+                    </div>
                   </div>
-                  <p className="text-zinc-500 text-xl md:text-2xl font-medium leading-tight max-w-md">
+                  <p className="text-zinc-500 text-lg font-bold md:text-xl leading-tight max-w-md">
                     The starting layer for high-fidelity interface development.
                   </p>
                 </div>
@@ -316,12 +339,10 @@ const Landing: React.FC<LandingProps> = ({ onLaunch }) => {
             <div className="pt-16 border-t border-white/5 flex flex-col lg:flex-row justify-between items-center gap-10 relative z-10">
               <div className="flex flex-col lg:flex-row items-start lg:items-center gap-6 lg:gap-10 text-left">
                 <p className="text-zinc-600 text-[10px] font-black uppercase tracking-[0.4em]">
-                  © 2026 INIT UI TECHNOLOGIES CO.
+                  © 2026 INIT UI .
                 </p>
                 <div className="hidden lg:block w-1.5 h-1.5 rounded-full bg-brand/20" />
-                <p className="text-zinc-600 text-[10px] font-black uppercase tracking-[0.4em]">
-                  Neural Core Enabled
-                </p>
+               
               </div>
             </div>
 

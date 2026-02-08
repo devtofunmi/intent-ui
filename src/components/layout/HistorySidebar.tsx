@@ -65,6 +65,7 @@ export const HistorySidebar = ({
         <div className="p-6 md:p-8 border-b border-white/5 flex items-center justify-between relative z-10">
           <div className="flex items-center gap-4">
             <button 
+              id="history-sidebar-btn-close-mobile"
               onClick={onClose}
               className="p-2 -ml-2 hover:bg-white/5 rounded-xl text-zinc-500 hover:text-white transition-all lg:hidden"
             >
@@ -77,6 +78,7 @@ export const HistorySidebar = ({
           <div className="flex items-center gap-2">
             {threads && threads.length > 0 && (
                  <button 
+                   id="history-sidebar-btn-clear-all"
                    onClick={() => setIsDeletingAll(true)}
                    className="w-10 h-10 bg-zinc-900 border border-white/10 text-zinc-400 hover:text-white hover:bg-red-500/20 hover:border-red-500/50 rounded-xl flex items-center justify-center transition-all shadow-none"
                    title="Clear All History"
@@ -84,10 +86,15 @@ export const HistorySidebar = ({
                    <Trash2 size={18} />
                  </button>
             )}
-            <button onClick={handleNewThread} className="w-10 h-10 bg-brand text-white rounded-xl flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-none brand-glow border border-brand/20">
+            <button 
+              id="history-sidebar-btn-new-thread"
+              onClick={handleNewThread} 
+              className="w-10 h-10 bg-brand text-white rounded-xl flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-none brand-glow border border-brand/20"
+            >
               <Plus size={20} />
             </button>
             <button 
+              id="history-sidebar-btn-close-desktop"
               onClick={onClose}
               className="p-2.5 hover:bg-white/5 rounded-xl text-zinc-500 hover:text-white transition-all hidden lg:block border border-transparent hover:border-white/10"
             >
@@ -120,6 +127,7 @@ export const HistorySidebar = ({
                 )} />
 
                 <button 
+                  id={`history-item-btn-select-${t.id}`}
                   onClick={() => {
                     onSelectThread(t.id);
                     onClose();
@@ -141,6 +149,7 @@ export const HistorySidebar = ({
                 </button>
                 
                 <button 
+                  id={`history-item-btn-delete-${t.id}`}
                   onClick={() => setDeletingThreadId(t.id)} 
                   className="opacity-0 group-hover:opacity-100 p-2 hover:bg-brand text-zinc-500 hover:text-white rounded-xl transition-all duration-300 shadow-none"
                   title="Deconstruct Session"
@@ -169,12 +178,14 @@ export const HistorySidebar = ({
              </p>
              <div className="flex justify-end gap-3">
                <button 
+                 id="history-modal-btn-cancel"
                  onClick={() => { setDeletingThreadId(null); setIsDeletingAll(false); }}
                  className="px-4 py-2 rounded-xl text-zinc-400 hover:text-white hover:bg-white/5 transition-colors text-sm font-medium"
                >
                  Cancel
                </button>
                <button 
+                 id="history-modal-btn-confirm"
                  onClick={isDeletingAll ? confirmDeleteAll : confirmDeleteThread}
                  className="px-4 py-2 rounded-xl bg-brand text-white hover:opacity-90 transition-opacity text-sm font-bold shadow-none brand-glow"
                >

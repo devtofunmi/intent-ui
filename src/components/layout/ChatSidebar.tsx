@@ -71,6 +71,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
       <div className="p-6 md:p-8 border-b border-white/5 flex items-center justify-between relative z-20">
         <div className="flex items-center gap-4">
           <button 
+            id="chat-sidebar-btn-close"
             onClick={onClose}
             className="p-2 -ml-2 hover:bg-white/5 rounded-xl text-zinc-500 hover:text-white transition-all"
           >
@@ -156,6 +157,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
           )}
 
           <input
+            id="chat-sidebar-instruction-input"
             type="text"
             value={isRecording ? 'Listening...' : value}
             onChange={(e) => setValue(e.target.value)}
@@ -167,6 +169,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
           
           <div className="absolute right-3 top-3 bottom-3 flex items-center gap-2 z-20">
             <button 
+              id="chat-sidebar-btn-voice"
               onClick={toggleRecording}
               disabled={isPending || isTranscribing}
               className={cn(
@@ -181,6 +184,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
             </button>
 
             <button 
+              id="chat-sidebar-btn-submit"
               onClick={handleSubmit}
               disabled={isPending || !thread || isRecording || isTranscribing}
               className="h-full aspect-square bg-brand text-white rounded-[1.2rem] flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-none brand-glow border border-brand/20 z-20 disabled:opacity-50 disabled:grayscale"
